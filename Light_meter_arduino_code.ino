@@ -1,4 +1,5 @@
-    #include <LiquidCrystal.h>
+    #include <LCD-I2C.h>
+    #include <Wire.h>
     #include <SparkFun_VEML7700_Arduino_Library.h> // Include the SparkFun VEML7700 library
     // buttons : ISO = 9, SP = 10, A = 13, Contrast = 7, plus + 10 = 1, minus -10 = 8
     VEML7700 veml; // Create a VEML7700 object
@@ -8,40 +9,46 @@
     int SP_counter = 32;
     int Apreture_counter = 9;
     int Contrast = 130;
-    LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  
+    LCD_I2C lcd(0x27, 16, 2); 
     float ISO_value = 100;
     float A_value = 2.8,SP_value = 60;
-    int ISO_button = 9, SP_button = 10, A_button = 13, Contrast_button = 7, plus_button = 1, minus_button = 8;
+    int ISO_button = 9, SP_button = 10, A_button = 13, Contrast_button = 7, plus_button = 6, minus_button = 8;
     int ISO_button_state = 0, SP_button_state = 0, A_button_state = 0, Contrast_button_state = 0, plus_button_state = 0, minus_button_state = 0, Last_plus_button_state = 0, Last_minus_button_state = 0;
-    int choose_const = -1, change_value = -1, go_back_to_normal = 0, Last_ISO = 0, Last_SP = 0, Last_A = 0, Last_SP_value = 0, Last_ISO_value = 0, Last_A_value = 0;
-    float Last_lux = 0;
-    void ISO_CHANGE_double() {
-        int NewISO = ISO_value*2;
-        if(NewISO < 10000){
-        ISO_value = NewISO;
+    int choose_const = -1, change_value = -1, go_back_to_normal = 0, Last_ISO = 0, Last_SP = 0, Last_A = 0, Last_SP_value = 0, Last_ISO_value = 0, Last_A_value = 0, ISO_value_for_calc = 0, Last_ISO_value_for_calc = 0;
+    float lux = 0, SP_value_for_calc = 0, Last_SP_value_for_calc = 0, A_value_for_calc = 0, Last_A_value_for_calc = 0;
+    void Parameter_menu(){
         lcd.clear();
-        lcd.begin(16, 2); // Initialize the LCD (16x2)
-        lcd.setCursor(2, 0);
+        lcd.setCursor(0, 0);
         lcd.print("ISO");
-        lcd.setCursor(7, 0);
+        lcd.setCursor(5, 0);
         lcd.print("SP");
         lcd.setCursor(13, 0);
         lcd.print("A");
-
-        lcd.setCursor(2, 1);
+        lcd.setCursor(0, 1);
         lcd.print(ISO_value, 0);
         if(SP_counter > -1 && SP_counter < 16){
-            lcd.setCursor(7, 1);
+            SP_value = arr_full_seconds_SP[SP_counter];
+            lcd.setCursor(5, 1);
             lcd.print(SP_value, 1);
         }
         if(SP_counter > 15 && SP_counter < 53){
-            lcd.setCursor(6, 1);
+            SP_value = arr_parts_seconds_SP[SP_counter - 15];
+            lcd.setCursor(4, 1);
             lcd.print("1/");
-            lcd.setCursor(8, 1);
+            lcd.setCursor(6, 1);
             lcd.print(SP_value, 1);
         }
         lcd.setCursor(12, 1);
         lcd.print(A_value);
+    }
+    void ISO_CHANGE_double() {
+        int NewISO = ISO_value*2;
+        if(NewISO < 10000){
+        ISO_value = NewISO;
+        lcd.setCursor(0, 1);
+        lcd.print("    ");
+        lcd.setCursor(0, 1);
+        lcd.print(ISO_value, 0);
         }
 
     }
@@ -49,58 +56,30 @@
         int NewISO = ISO_value*0.5;
         if(NewISO >= 25){
             ISO_value = NewISO;
-            lcd.clear();
-            lcd.begin(16, 2); // Initialize the LCD (16x2)
-            lcd.setCursor(2, 0);
-            lcd.print("ISO");
-            lcd.setCursor(7, 0);
-            lcd.print("SP");
-            lcd.setCursor(13, 0);
-            lcd.print("A");
-
-            lcd.setCursor(2, 1);
+            lcd.setCursor(0, 1);
+            lcd.print("    ");
+            lcd.setCursor(0, 1);
             lcd.print(ISO_value, 0);
-            if(SP_counter > -1 && SP_counter < 16){
-                lcd.setCursor(7, 1);
-                lcd.print(SP_value, 1);
-            }
-            if(SP_counter > 15 && SP_counter < 53){
-                lcd.setCursor(6, 1);
-                lcd.print("1/");
-                lcd.setCursor(8, 1);
-                lcd.print(SP_value, 1);
-            }
-            lcd.setCursor(12, 1);
-            lcd.print(A_value);
         }
     }
     int SP_CHANGE(){
         if(SP_counter > -1 && SP_counter <= 52){
-            lcd.clear();
-        lcd.begin(16, 2); // Initialize the LCD (16x2)
-        lcd.setCursor(2, 0);
-        lcd.print("ISO");
-        lcd.setCursor(7, 0);
-        lcd.print("SP");
-        lcd.setCursor(13, 0);
-        lcd.print("A");
-
-        lcd.setCursor(2, 1);
-        lcd.print(ISO_value, 0);
-        if(SP_counter > -1 && SP_counter < 16){
-            SP_value = arr_full_seconds_SP[SP_counter];
-            lcd.setCursor(7, 1);
-            lcd.print(SP_value, 1);
-        }
-        if(SP_counter > 15 && SP_counter < 53){
-            SP_value = arr_parts_seconds_SP[SP_counter - 15];
-            lcd.setCursor(6, 1);
-            lcd.print("1/");
-            lcd.setCursor(8, 1);
-            lcd.print(SP_value, 1);
-        }
-        lcd.setCursor(12, 1);
-        lcd.print(A_value);
+            lcd.setCursor(4, 1);
+            lcd.print("        ");
+            if(SP_counter > -1 && SP_counter < 16){
+                SP_value = arr_full_seconds_SP[SP_counter];
+                SP_value_for_calc = SP_value;
+                lcd.setCursor(5, 1);
+                lcd.print(SP_value, 1);
+            }
+            if(SP_counter > 15 && SP_counter < 53){
+                SP_value = arr_parts_seconds_SP[SP_counter - 15];
+                SP_value_for_calc = 1/SP_value;
+                lcd.setCursor(4, 1);
+                lcd.print("1/");
+                lcd.setCursor(6, 1);
+                lcd.print(SP_value, 1);
+            }
         }
     }
 
@@ -109,7 +88,9 @@
         Serial.begin(9600); // Start serial communication
         Wire.begin(); // Begin I2C communication
         analogWrite(6, Contrast);// Set contrast for the LCD
-        lcd.begin(16, 2); // Initialize the LCD (16x2)
+        lcd.begin(&Wire); // Initialize the LCD (16x2)
+        lcd.backlight();
+        lcd.display();
         lcd.setCursor(0, 0);
         lcd.print("Choose parameter:");
         lcd.setCursor(2, 1);
@@ -150,71 +131,34 @@
             choose_const = -1;
             change_value = -1;
         }
-        ISO_button_state = digitalRead(ISO_button);
-        SP_button_state = digitalRead(SP_button);
-        A_button_state = digitalRead(A_button);
-        Contrast_button_state = digitalRead(Contrast_button);
-        if(choose_const == -1){
-            if (ISO_button_state == HIGH) {
+        while(choose_const == -1){
+            ISO_button_state = digitalRead(ISO_button);
+            SP_button_state = digitalRead(SP_button);
+            A_button_state = digitalRead(A_button);
+            if(Last_ISO != ISO_button_state){
+                if (ISO_button_state == HIGH) {
                 choose_const = 1;
-                Last_ISO = 1;
-                lcd.clear();
-                lcd.setCursor(2, 0);
-                lcd.print("ISO");
-                lcd.setCursor(7, 0);
-                lcd.print("SP");
-                lcd.setCursor(13, 0);
-                lcd.print("A");
-
-                lcd.setCursor(2, 1);
-                lcd.print(ISO_value, 0);
-                lcd.setCursor(6, 1);
-                lcd.print("1/");
-                lcd.setCursor(8, 1);
-                lcd.print(SP_value, 1);
-                lcd.setCursor(12, 1);
-                lcd.print(A_value);
+                Last_ISO = ISO_button_state;
+                Parameter_menu();
             }
-            if (SP_button_state == HIGH){
+            }
+            if(Last_SP != SP_button_state){
+                if (SP_button_state == HIGH){
                 choose_const = 2;
-                Last_SP = 1;
-                lcd.clear();
-                lcd.setCursor(2, 0);
-                lcd.print("ISO");
-                lcd.setCursor(7, 0);
-                lcd.print("SP");
-                lcd.setCursor(13, 0);
-                lcd.print("A");
-
-                lcd.setCursor(2, 1);
-                lcd.print(ISO_value, 0);
-                lcd.setCursor(6, 1);
-                lcd.print("1/");
-                lcd.setCursor(8, 1);
-                lcd.print(SP_value, 1);
-                lcd.setCursor(12, 1);
-                lcd.print(A_value);
+                Last_SP = SP_button_state;
+                Parameter_menu();
             }
-            if(A_button_state == HIGH){
+            }
+            if(Last_A != A_button_state){
+                if(A_button_state == HIGH){
                 choose_const = 3;
-                Last_A = 1;
-                lcd.clear();
-                lcd.setCursor(2, 0);
-                lcd.print("ISO");
-                lcd.setCursor(7, 0);
-                lcd.print("SP");
-                lcd.setCursor(13, 0);
-                lcd.print("A");
-
-                lcd.setCursor(2, 1);
-                lcd.print(ISO_value, 0);
-                lcd.setCursor(6, 1);
-                lcd.print("1/");
-                lcd.setCursor(8, 1);
-                lcd.print(SP_value, 1);
-                lcd.setCursor(12, 1);
-                lcd.print(A_value);
+                Last_A = A_button_state;
+                Parameter_menu();
             }
+            }
+            Last_ISO = ISO_button_state;
+            Last_SP = SP_button_state;
+            Last_A = A_button_state;
         }
         switch(choose_const){
             case 1 : 
@@ -222,73 +166,49 @@
                     ISO_button_state = digitalRead(ISO_button);
                     SP_button_state = digitalRead(SP_button);
                     A_button_state = digitalRead(A_button);
-                    Contrast_button_state = digitalRead(Contrast_button);
                     if(Last_ISO != ISO_button_state){
                         if(ISO_button_state == HIGH){
                             change_value = 1;
-                            Serial.println("ISO button is pressed");
                         }
                     }   
-                    if(SP_button_state == HIGH){
-                        change_value = 2;
-                        Last_plus_button_state = 1;
-                        Last_minus_button_state = 1;
-                        Serial.println("SP button is pressed");
+                    if(Last_SP != SP_button_state){
+                        if(SP_button_state == HIGH){
+                            change_value = 2;
+                        }
                     }
-                    if(A_button_state == HIGH){
-                        change_value = 3;
-                        Serial.println("Apreture button is pressed");
-                    }
-                    if(Contrast_button_state == HIGH){
-                        change_value = 4;
-                        Serial.println("Contrast button is pressed");
+                    if(Last_A != A_button_state){
+                        if(A_button_state == HIGH){
+                            change_value = 3;
+                        }
                     }
                     switch(change_value){
                         case 1:
-                            choose_const = -1;
                             go_back_to_normal = 1;
                             break;
                         case 2:
-                            Serial.print("Plus_button: ");Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
-                            Serial.println(SP_value);
                             if(Last_plus_button_state != plus_button_state){
-                                Serial.print("Last_plus:");Serial.println(Last_plus_button_state);
-                                Serial.print("Plus_button:");Serial.println(plus_button_state);
                             if(plus_button_state == HIGH){
                                 SP_counter = SP_counter + 1;
-                                Serial.print("SP_counter:");Serial.println(SP_counter);
-                                Serial.println("+1SP");
                                 SP_CHANGE();
                             }
                         }
                             if(Last_minus_button_state != minus_button_state){
                                 if(minus_button_state == HIGH){
                                 SP_counter = SP_counter - 1;
-                                Serial.print("SP_counter:");Serial.println(SP_counter);
-                                Serial.println("-1SP");
                                 SP_CHANGE();
                             }
                         }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         case 3:
-                            Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
                             if(Last_plus_button_state != plus_button_state){
-                                Serial.println("Last plus not the same as right now");
                             if(plus_button_state == HIGH){
                                 if(Apreture_counter + 1 < 29){
-                                    Serial.println("Aperute_counter ++");
                                     Apreture_counter++;
                                     A_value = arr_Apreture[Apreture_counter];
                                     lcd.setCursor(12, 1);
@@ -297,10 +217,8 @@
                             }
                         }
                             if(Last_minus_button_state != minus_button_state){
-                                Serial.println("Last minus not the same as right now");
                                 if(minus_button_state == HIGH){
                                     if(Apreture_counter - 1 > -1){
-                                        Serial.println("Aperute_counter --");
                                         Apreture_counter--;
                                         A_value = arr_Apreture[Apreture_counter];
                                         lcd.setCursor(12, 1);
@@ -310,66 +228,28 @@
                             }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
-                            break;
-                        case 4:
-                            Serial.println(plus_button_state);
-                            Serial.println(Last_plus_button_state);
-                            if(Last_plus_button_state != plus_button_state){
-                                plus_button_state = digitalRead(plus_button);
-                                if(plus_button_state == HIGH){
-                                    if(Contrast + 10 <= 250){
-                                        Contrast = Contrast + 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            if(Last_minus_button_state != minus_button_state){
-                                minus_button_state = digitalRead(minus_button);
-                                if(minus_button_state == HIGH){
-                                    if(Contrast - 10 >= 0){
-                                        Contrast = Contrast - 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            Last_plus_button_state = digitalRead(plus_button);
-                            Last_minus_button_state = digitalRead(minus_button);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         default:
-                            Serial.println("Nothing to change");
                             break;
                     }
-                    Last_ISO = digitalRead(ISO_button);
-                    Last_SP = digitalRead(SP_button);
-                    Last_A = digitalRead(A_button);
-                    ISO_button_state = 0;
-                    SP_button_state = 0;
-                    A_button_state = 0;
-                    Contrast_button_state = 0;
-                    plus_button_state = 0;
-                    minus_button_state = 0;
-                    Serial.print(F("Lux:"));
-                    // Read the lux value from the sensor
-                    Serial.println(veml.getLux(), 4);
-                    float lux = veml.getLux();
-                    Last_lux = lux;
-                    ISO_value = (250*A_value*A_value)/(SP_value*lux);
-                    if(Last_ISO != ISO_value){
-                        if(ISO_value < 10000 && ISO_value >= 25){
-                            Serial.println(ISO_value);
-                            lcd.setCursor(2, 1);
-                            lcd.print("    ");
-                            lcd.setCursor(2, 1);
-                            lcd.print(ISO_value, 0);
-                        }
+                    lux = veml.getLux();
+                    if((250*A_value*A_value)/(SP_value_for_calc*lux) < 10000){
+                        ISO_value = (250*A_value*A_value)/(SP_value_for_calc*lux);
+                        ISO_value_for_calc = (250*A_value*A_value)/(SP_value_for_calc);
                     }
-                    Last_ISO = ISO_value;
+                    if(Last_ISO_value_for_calc != ISO_value_for_calc){
+                        Serial.print("ISO_value");Serial.println(ISO_value);
+                        if(ISO_value < 10000 && ISO_value >= 0){
+                        lcd.setCursor(0, 1);
+                        lcd.print("    ");
+                        lcd.setCursor(0, 1);
+                        lcd.print(ISO_value, 0);
+                    }
+                    }
+                    Last_ISO = ISO_button_state;
+                    Last_SP = SP_button_state;
+                    Last_A = A_button_state;
+                    Last_ISO_value_for_calc = ISO_value_for_calc;
                 }
                 break;
             case 2:
@@ -377,63 +257,48 @@
                     ISO_button_state = digitalRead(ISO_button);
                     SP_button_state = digitalRead(SP_button);
                     A_button_state = digitalRead(A_button);
-                    Contrast_button_state = digitalRead(Contrast_button);
+                    if(Last_ISO != ISO_button_state){
                         if(ISO_button_state == HIGH){
                             change_value = 1;
-                            Serial.println("ISO button is pressed");
-                        }   
+                        }
+                    }   
                     if(Last_SP != SP_button_state){
                         if(SP_button_state == HIGH){
                             change_value = 2;
-                            Serial.println("SP button is pressed");
                         }
                     }
-                    if(A_button_state == HIGH){
-                        change_value = 3;
-                        Serial.println("Apreture button is pressed");
-                    }
-                    if(Contrast_button_state == HIGH){
-                        change_value = 4;
-                        Serial.println("Contrast button is pressed");
+                    if(Last_A != A_button_state){
+                        if(A_button_state == HIGH){
+                            change_value = 3;
+                        }
                     }
                     switch(change_value){
                         case 1:
-                            Serial.print("Plus_button: ");Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
-                            Serial.println(ISO_value);
                             if(Last_plus_button_state != plus_button_state){
-                                if(plus_button_state == HIGH){ 
-                                    ISO_CHANGE_double();
-                                }
+                            if(plus_button_state == HIGH){
+                                ISO_CHANGE_double();
                             }
+                        }
                             if(Last_minus_button_state != minus_button_state){
                                 if(minus_button_state == HIGH){
-                                    ISO_CHANGE_decrease();
-                                }
+                                ISO_CHANGE_decrease();
                             }
+                        }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         case 2:
                             choose_const = -1;
                             go_back_to_normal = 1;
                             break;
                         case 3:
-                            Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
                             if(Last_plus_button_state != plus_button_state){
-                                Serial.println("Last plus not the same as right now");
                             if(plus_button_state == HIGH){
                                 if(Apreture_counter + 1 < 29){
-                                    Serial.println("Aperute_counter ++");
                                     Apreture_counter++;
                                     A_value = arr_Apreture[Apreture_counter];
                                     lcd.setCursor(12, 1);
@@ -442,10 +307,8 @@
                             }
                         }
                             if(Last_minus_button_state != minus_button_state){
-                                Serial.println("Last minus not the same as right now");
                                 if(minus_button_state == HIGH){
                                     if(Apreture_counter - 1 > -1){
-                                        Serial.println("Aperute_counter --");
                                         Apreture_counter--;
                                         A_value = arr_Apreture[Apreture_counter];
                                         lcd.setCursor(12, 1);
@@ -455,75 +318,36 @@
                             }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
-                            break;
-                        case 4:
-                            Serial.println(plus_button_state);
-                            Serial.println(Last_plus_button_state);
-                            if(Last_plus_button_state != plus_button_state){
-                                plus_button_state = digitalRead(plus_button);
-                                if(plus_button_state == HIGH){
-                                    if(Contrast + 10 <= 250){
-                                        Contrast = Contrast + 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            if(Last_minus_button_state != minus_button_state){
-                                minus_button_state = digitalRead(minus_button);
-                                if(minus_button_state == HIGH){
-                                    if(Contrast - 10 >= 0){
-                                        Contrast = Contrast - 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            Last_plus_button_state = digitalRead(plus_button);
-                            Last_minus_button_state = digitalRead(minus_button);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         default:
-                            Serial.println("Nothing to change");
                             break;
                     }
                     Last_ISO = digitalRead(ISO_button);
                     Last_SP = digitalRead(SP_button);
                     Last_A = digitalRead(A_button);
-                    ISO_button_state = 0;
-                    SP_button_state = 0;
-                    A_button_state = 0;
-                    Contrast_button_state = 0;
-                    plus_button_state = 0;
-                    minus_button_state = 0;
-                    Serial.print(F("Lux:"));
-                    // Read the lux value from the sensor
-                    Serial.println(veml.getLux(), 4);
-                    float lux = veml.getLux();
-                    Last_lux = lux;
+                    lux = veml.getLux();
                     SP_value = (250*A_value*A_value)/(ISO_value*lux);
-                    Serial.println(SP_value);
-                    if(Last_SP_value != SP_value){
+                    SP_value_for_calc = (250*A_value*A_value)/(ISO_value);
+                    Serial.print("LUX");Serial.println(lux);
+                    Serial.print("SP_value:");Serial.println(SP_value);
+                    if(Last_SP_value_for_calc != SP_value_for_calc){
                         if(SP_value < 1){
-                            Serial.println("SP is lower than 0");
                             SP_value = 1/SP_value;
-                            lcd.setCursor(6, 1);
+                            lcd.setCursor(4, 1);
+                            lcd.print("        ");
+                            lcd.setCursor(4, 1);
                             lcd.print("1/");
-                            lcd.setCursor(8, 1);
+                            lcd.setCursor(6, 1);
                             lcd.print(SP_value, 1);
                         }
-                        if(SP_value >= 1){
-                            Serial.println("SP value above 0");
-                            lcd.setCursor(6, 1);
-                            lcd.print("      ");
-                            lcd.setCursor(7, 1);
+                        else{
+                            lcd.setCursor(4, 1);
+                            lcd.print("        ");
+                            lcd.setCursor(5, 1);
                             lcd.print(SP_value, 1);
                         }
                     }
-                    Last_SP_value = SP_value;
+                    Last_SP_value_for_calc = SP_value_for_calc;
                 }
                 break;
             case 3:
@@ -531,36 +355,25 @@
                     ISO_button_state = digitalRead(ISO_button);
                     SP_button_state = digitalRead(SP_button);
                     A_button_state = digitalRead(A_button);
-                    Contrast_button_state = digitalRead(Contrast_button);
+                    if(Last_ISO != ISO_button_state){
                         if(ISO_button_state == HIGH){
                             change_value = 1;
-                            Serial.println("ISO button is pressed");
                         }
-                    if(SP_button_state == HIGH){
-                        change_value = 2;
-                        Last_plus_button_state = 1;
-                        Last_minus_button_state = 1;
-                        Serial.println("SP button is pressed");
+                    }   
+                    if(Last_SP != SP_button_state){
+                        if(SP_button_state == HIGH){
+                            change_value = 2;
+                        }
                     }
                     if(Last_A != A_button_state){
                         if(A_button_state == HIGH){
                             change_value = 3;
-                            Serial.println("Apreture button is pressed");
                         }
-                    }
-                    
-                    if(Contrast_button_state == HIGH){
-                        change_value = 4;
-                        Serial.println("Contrast button is pressed");
                     }
                     switch(change_value){
                         case 1:
-                            Serial.print("Plus_button: ");Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
-                            Serial.println(ISO_value);
                             if(Last_plus_button_state != plus_button_state){
                                 if(plus_button_state == HIGH){ 
                                     ISO_CHANGE_double();
@@ -573,105 +386,50 @@
                             }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         case 2:
-                            Serial.print("Plus_button: ");Serial.println(plus_button_state);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             plus_button_state = digitalRead(plus_button);
                             minus_button_state = digitalRead(minus_button);
-                            Serial.println(SP_value);
                             if(Last_plus_button_state != plus_button_state){
-                                Serial.print("Last_plus:");Serial.println(Last_plus_button_state);
-                                Serial.print("Plus_button:");Serial.println(plus_button_state);
                             if(plus_button_state == HIGH){
-                                SP_counter = SP_counter + 1;
-                                Serial.print("SP_counter:");Serial.println(SP_counter);
-                                Serial.println("+1SP");
-                                SP_CHANGE();
+                                    SP_counter = SP_counter + 1;
+                                    SP_CHANGE();
                             }
                         }
                             if(Last_minus_button_state != minus_button_state){
                                 if(minus_button_state == HIGH){
-                                SP_counter = SP_counter - 1;
-                                Serial.print("SP_counter:");Serial.println(SP_counter);
-                                Serial.println("-1SP");
-                                SP_CHANGE();
+                                    SP_counter = SP_counter - 1;
+                                    SP_CHANGE();
                             }
                         }
                             Last_plus_button_state = plus_button_state;
                             Last_minus_button_state = minus_button_state;
-                            plus_button_state = 0;
-                            minus_button_state = 0;
                             break;
                         case 3:
                             choose_const = -1;
                             go_back_to_normal = 1;
                             break;
-                        case 4:
-                            Serial.println(plus_button_state);
-                            Serial.println(Last_plus_button_state);
-                            if(Last_plus_button_state != plus_button_state){
-                                plus_button_state = digitalRead(plus_button);
-                                if(plus_button_state == HIGH){
-                                    if(Contrast + 10 <= 250){
-                                        Contrast = Contrast + 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            if(Last_minus_button_state != minus_button_state){
-                                minus_button_state = digitalRead(minus_button);
-                                if(minus_button_state == HIGH){
-                                    if(Contrast - 10 >= 0){
-                                        Contrast = Contrast - 10;
-                                        analogWrite(6, Contrast);
-                                    }
-                                    Serial.println(Contrast);
-                                }
-                            }
-                            Last_plus_button_state = digitalRead(plus_button);
-                            Last_minus_button_state = digitalRead(minus_button);
-                            plus_button_state = 0;
-                            minus_button_state = 0;
-                            break;
                         default:
-                            Serial.println("Nothing to change");
                             break;
                     }
                     Last_ISO = digitalRead(ISO_button);
                     Last_SP = digitalRead(SP_button);
                     Last_A = digitalRead(A_button);
-                    ISO_button_state = 0;
-                    SP_button_state = 0;
-                    A_button_state = 0;
-                    Contrast_button_state = 0;
-                    plus_button_state = 0;
-                    minus_button_state = 0;
-                    Serial.print(F("Lux:"));
-                    // Read the lux value from the sensor
-                    Serial.println(veml.getLux(), 4);
-                    float lux = veml.getLux();
-                    Last_lux = lux;
-                    A_value = sqrt((lux*ISO_value*SP_value)/250);
-                    lcd.setCursor(12, 1);
-                    lcd.print("    ");
-                    lcd.setCursor(12, 1);
-                    lcd.print(A_value);
+                    lux = veml.getLux();
+                    Serial.print("LUX:");Serial.println(lux);
+                    A_value = sqrt((lux*ISO_value*SP_value_for_calc)/250);
+                    A_value_for_calc = sqrt((ISO_value*SP_value_for_calc)/250);
+                    Serial.print("Aperature:");Serial.println(A_value);
+                    if(Last_A_value_for_calc != A_value_for_calc){
+                        lcd.setCursor(12, 1);
+                        lcd.print("    ");
+                        lcd.setCursor(12, 1);
+                        lcd.print(A_value);
+                    }
+                    Last_A_value_for_calc = A_value_for_calc;
                 }
                 break;
-            default: Serial.println("nothing pressed");break;
+            default: 
+                break;
         }
-        ISO_button_state = 0;
-        SP_button_state = 0;
-        A_button_state = 0;
-        Contrast_button_state = 0;
-        plus_button_state = 0;
-        minus_button_state = 0;
-        Serial.print(F("Lux:"));
-        // Read the lux value from the sensor
-        Serial.println(veml.getLux(), 4);
     }
