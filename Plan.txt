@@ -1,0 +1,26 @@
+ПЛАН
+
+1.Да се определят частите, които ще бъдат използвани.
+	Екранът е определен
+	https://store.comet.bg/en/Catalogue/Product/52514/
+	
+	Микроконтролерът е определен
+	https://www.aliexpress.com/item/1005006863895185.html?spm=a2g0o.productlist.main.6.3ed451a1k2tRVC&algo_pvid=34500e49-27f2-4ecc-862b-148a1903a3de&algo_exp_id=34500e49-27f2-4ecc-862b-148a1903a3de-5&pdp_ext_f=%7B%22order%22%3A%228709%22%2C%22eval%22%3A%221%22%2C%22orig_sl_item_id%22%3A%221005006863895185%22%2C%22orig_item_id%22%3A%221005007569108276%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BGN%2113.99%211.70%21%21%2158.06%217.03%21%40211b431017614883905496712ec267%2112000038553036807%21sea%21BG%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A466be1a1%3Bm03_new_user%3A-29895%3BpisId%3A5000000187455135&curPageLogUid=nTSTlsfFN30J&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005006863895185%7C_p_origin_prod%3A1005007569108276
+	
+	Ротационните енкодери са определени
+	https://www.aliexpress.com/item/1005008844150018.html?spm=a2g0o.productlist.main.1.4f9c408463yMI1&algo_pvid=68f0d277-25bb-4c3b-8c88-e4c1d1715219&algo_exp_id=68f0d277-25bb-4c3b-8c88-e4c1d1715219-0&pdp_ext_f=%7B%22order%22%3A%225%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BGN%217.52%217.52%21%21%2131.20%2131.20%21%40211b430817614885644826152ef644%2112000046918003422%21sea%21BG%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A466be1a1%3Bm03_new_user%3A-29895&curPageLogUid=5asfUiMfC7Lx&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008844150018%7C_p_origin_prod%3A
+	
+	Светлинният сензор е определен и наличен
+	https://www.aliexpress.com/item/1005009396294462.html?spm=a2g0o.productlist.main.1.573c7e3eZtPH82&algo_pvid=fe0990f7-274a-45c6-9d6c-fce1f082f167&algo_exp_id=fe0990f7-274a-45c6-9d6c-fce1f082f167-0&pdp_ext_f=%7B%22order%22%3A%2247%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BGN%215.56%211.70%21%21%2123.10%217.08%21%402103963717614886456201779ee8b6%2112000048973751229%21sea%21BG%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A466be1a1%3Bm03_new_user%3A-29895%3BpisId%3A5000000187455135&curPageLogUid=xjm8AfVAdcEp&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005009396294462%7C_p_origin_prod%3A
+
+	Бутонът е наличен
+
+2.Да се поръчат частите.
+3.Да се направи прототип на breadboard.
+4.Да се направи прототип на прототипна платка.
+5.Да се проектира печатна платка.
+6.Да се разпечата платката. Ако това не е успешно да се проектира наново.
+7.Да се монтират компонентите на печатната платка. Ако това не е успешно платката да се проектира наново.
+8.Да се проектира 3D модел за корпуса на проекта.
+9.Да се принтира корпуса на проетка. Ако това не е успешно, да се проектира наново.
+10. Корпусът да може да бъде монтиран за проекта. Ако това не е успешно, да се проектира на ново.
