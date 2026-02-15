@@ -1,0 +1,3 @@
+https://electronics.stackexchange.com/questions/701864/selecting-a-diode-to-prevent-backfeeding-from-5-v-to-usb-c-port
+
+"The 5V rail is only feeding the 3.3V regulator that has a low dropout of about 1V, and the neopixels which work down to 3.7V. Any silicon diode rated for 1000mA minimum will do the job. A 1N4001 (SMD variant is called M1) will do the job just fine, as will do any higher diode in the 1N4001/M1 series, up to 7, i.e. up to 1N4007 or M7. The lower the number, the lower the reverse voltage rating, but all of them are much higher than your application requires, so 1N4001 or M1 will be perfect."
