@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Rotary_JST")(type "KiCad")(uri "${KIPRJMOD}/libraries/Rotary_JST.pretty")(options "")(descr ""))
+)
