@@ -2,4 +2,5 @@
   (version 7)
   (lib (name "Rotary_JST")(type "KiCad")(uri "${KIPRJMOD}/libraries/Rotary_JST.pretty")(options "")(descr ""))
   (lib (name "Boost_Converter_Module_Footprint")(type "KiCad")(uri "${KIPRJMOD}/libraries/Boost_Converter_Module_Footprint.pretty")(options "")(descr ""))
+  (lib (name "Vertical_Push_Button")(type "KiCad")(uri "${KIPRJMOD}/libraries/Vertical_Push_Button.pretty")(options "")(descr ""))
 )

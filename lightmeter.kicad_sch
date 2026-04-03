@@ -6137,7 +6137,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH-12mm"
+		(property "Footprint" "Vertical_Push_Button:Vertical_Push_Button"
 			(at 46.99 125.73 0)
 			(effects
 				(font
@@ -8167,7 +8167,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_THT:SW_PUSH-12mm"
+		(property "Footprint" "Button_Switch_THT:SW_PUSH_1P1T_6x3.5mm_H4.3_APEM_MJTP1243"
 			(at 88.9 111.76 0)
 			(effects
 				(font

@@ -4,7 +4,7 @@
 	(generator_version "9.0")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
-		(at 0 -0.5 0)
+		(at 2 -13.5 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "bb46712b-eb21-4430-845e-ef58dbed9964")
@@ -54,44 +54,55 @@
 		)
 	)
 	(attr smd)
-	(fp_line
-		(start -2 -2.25)
-		(end 20 -2.25)
+	(fp_rect
+		(start 0 -15.25)
+		(end 22 0)
 		(stroke
-			(width 0.05)
+			(width 0.1)
 			(type default)
 		)
-		(layer "Edge.Cuts")
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "f0dc6cb4-81d3-4a04-98ea-c245fc490f64")
+	)
+	(fp_line
+		(start 0 -15.25)
+		(end 22 -15.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.Fab")
 		(uuid "8d33bd47-035c-45de-8d0f-66101545ec0a")
 	)
 	(fp_line
-		(start -2 13)
-		(end -2 -2.25)
+		(start 0 0)
+		(end 0 -15.25)
 		(stroke
 			(width 0.05)
-			(type default)
+			(type solid)
 		)
-		(layer "Edge.Cuts")
+		(layer "F.Fab")
 		(uuid "ee69fc24-0a9a-466b-8009-6ccd933a1d7a")
 	)
 	(fp_line
-		(start 20 -2.25)
-		(end 20 13)
+		(start 22 -15.25)
+		(end 22 0)
 		(stroke
 			(width 0.05)
-			(type default)
+			(type solid)
 		)
-		(layer "Edge.Cuts")
+		(layer "F.Fab")
 		(uuid "81896f68-f1af-4f27-b42f-43bfff0c74d7")
 	)
 	(fp_line
-		(start 20 13)
-		(end -2 13)
+		(start 22 0)
+		(end 0 0)
 		(stroke
 			(width 0.05)
-			(type default)
+			(type solid)
 		)
-		(layer "Edge.Cuts")
+		(layer "F.Fab")
 		(uuid "c9ad9c58-e882-4b63-b885-1e6f700c01dc")
 	)
 	(fp_text user "${REFERENCE}"
@@ -107,7 +118,7 @@
 		)
 	)
 	(pad "1" thru_hole roundrect
-		(at 0 0)
+		(at 2 -13)
 		(size 3 4)
 		(drill 2)
 		(layers "*.Cu" "*.Mask")
@@ -116,7 +127,7 @@
 		(uuid "b049a127-98c7-411f-a81e-8031ebfa399b")
 	)
 	(pad "2" thru_hole roundrect
-		(at 0 10.25)
+		(at 2 -2.75)
 		(size 3 4)
 		(drill 2)
 		(layers "*.Cu" "*.Mask")
@@ -125,7 +136,7 @@
 		(uuid "3c697d74-d688-49cc-a06e-9e26af6c39dc")
 	)
 	(pad "2" thru_hole roundrect
-		(at 18 10.75)
+		(at 20 -2.25)
 		(size 3 4)
 		(drill 2)
 		(layers "*.Cu" "*.Mask")
@@ -134,7 +145,7 @@
 		(uuid "f99ba581-20d8-4334-b492-d7c3a0ad0487")
 	)
 	(pad "3" thru_hole roundrect
-		(at 18 0)
+		(at 20 -13)
 		(size 3 4)
 		(drill 2)
 		(layers "*.Cu" "*.Mask")
