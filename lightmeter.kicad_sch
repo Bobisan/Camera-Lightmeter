@@ -3720,7 +3720,7 @@
 		(uuid "050d9735-5210-4d9b-a6d3-44ea8302779e")
 	)
 	(junction
-		(at 45.72 88.9)
+		(at 48.26 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0907cddb-3f21-4f8d-a318-f8300098d6d9")
@@ -3730,12 +3730,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0bf2c020-c563-48c4-a3eb-7a7e7d601089")
-	)
-	(junction
-		(at 52.07 88.9)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "13618a50-1e4a-4292-916f-18dbea122f14")
 	)
 	(junction
 		(at 36.83 100.33)
@@ -3862,12 +3856,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "bc37e8fa-eeee-46af-9859-bcded8928f19")
-	)
-	(junction
-		(at 45.72 100.33)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "cded9e3c-47da-4bed-b8a2-6249aaca7b6f")
 	)
 	(junction
 		(at 43.18 176.53)
@@ -4297,7 +4285,7 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 86.36) (xy 52.07 88.9)
+			(xy 48.26 86.36) (xy 48.26 88.9)
 		)
 		(stroke
 			(width 0)
@@ -4557,16 +4545,6 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 100.33) (xy 52.07 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6ad9bb43-bbe8-4666-a5ef-169b4124dd7f")
-	)
-	(wire
-		(pts
 			(xy 54.61 158.75) (xy 54.61 161.29)
 		)
 		(stroke
@@ -4657,16 +4635,6 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 88.9) (xy 45.72 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "765f0f88-e65c-433e-b032-e951d38ec6bf")
-	)
-	(wire
-		(pts
 			(xy 137.16 171.45) (xy 140.97 171.45)
 		)
 		(stroke
@@ -4704,16 +4672,6 @@
 			(type default)
 		)
 		(uuid "7cc2e8e1-3bb9-4a2f-b3eb-03e9bd7aaf8d")
-	)
-	(wire
-		(pts
-			(xy 45.72 88.9) (xy 44.45 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7cef6ecb-241a-4d21-a1cc-b59400c3944b")
 	)
 	(wire
 		(pts
@@ -4887,7 +4845,7 @@
 	)
 	(wire
 		(pts
-			(xy 36.83 100.33) (xy 45.72 100.33)
+			(xy 36.83 100.33) (xy 48.26 100.33)
 		)
 		(stroke
 			(width 0)
@@ -4967,7 +4925,7 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 99.06) (xy 45.72 100.33)
+			(xy 48.26 99.06) (xy 48.26 100.33)
 		)
 		(stroke
 			(width 0)
@@ -5004,16 +4962,6 @@
 			(type default)
 		)
 		(uuid "a73072bb-070d-4af5-8281-275b28369a42")
-	)
-	(wire
-		(pts
-			(xy 52.07 100.33) (xy 52.07 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a7a9f290-74a5-4153-b51a-0332ad645816")
 	)
 	(wire
 		(pts
@@ -5097,7 +5045,7 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 88.9) (xy 45.72 91.44)
+			(xy 48.26 88.9) (xy 48.26 91.44)
 		)
 		(stroke
 			(width 0)
@@ -5414,6 +5362,16 @@
 			(type default)
 		)
 		(uuid "e60ccb22-61d4-4f2a-b449-476d79ad2afd")
+	)
+	(wire
+		(pts
+			(xy 44.45 88.9) (xy 48.26 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e66cc334-0a63-45f5-92d1-9237f04ef8fb")
 	)
 	(wire
 		(pts
@@ -8210,77 +8168,6 @@
 		)
 	)
 	(symbol
-		(lib_id "boost_converter_module:boost_converter_module")
-		(at 213.36 76.2 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "62a267db-fab7-4663-9ca4-e85a6f524452")
-		(property "Reference" "U4"
-			(at 220.3462 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "~"
-			(at 220.3462 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Boost_Converter_Module_Footprint:Boost_Converter_Module"
-			(at 213.36 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 213.36 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 213.36 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c346699e-5662-433f-b2cd-27f0f5bdce54")
-		)
-		(pin "3"
-			(uuid "36b0b935-cb21-4d55-bf71-3f46dd490ff0")
-		)
-		(pin "2"
-			(uuid "f2a1590d-f3cc-48bc-9660-a372c2dfaf38")
-		)
-		(instances
-			(project ""
-				(path "/d6ab05e9-ebb1-480e-b763-4bcbf117a171"
-					(reference "U4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
 		(at 232.41 71.12 0)
 		(mirror y)
@@ -8349,7 +8236,7 @@
 	)
 	(symbol
 		(lib_id "power:VCC")
-		(at 52.07 86.36 0)
+		(at 48.26 86.36 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8358,7 +8245,7 @@
 		(fields_autoplaced yes)
 		(uuid "665e9994-9ba4-48ec-b93d-565617c5db8a")
 		(property "Reference" "#PWR08"
-			(at 52.07 90.17 0)
+			(at 48.26 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8367,7 +8254,7 @@
 			)
 		)
 		(property "Value" "VCC_3V3"
-			(at 52.07 81.28 0)
+			(at 48.26 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8375,7 +8262,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 52.07 86.36 0)
+			(at 48.26 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8384,7 +8271,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 52.07 86.36 0)
+			(at 48.26 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8393,7 +8280,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 52.07 86.36 0)
+			(at 48.26 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8485,7 +8372,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 45.72 95.25 0)
+		(at 48.26 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8494,7 +8381,7 @@
 		(fields_autoplaced yes)
 		(uuid "708eeff4-3d9e-4066-a7fa-8ec6f06c499d")
 		(property "Reference" "C4"
-			(at 49.53 93.9799 0)
+			(at 52.07 93.9799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8503,7 +8390,7 @@
 			)
 		)
 		(property "Value" "1u"
-			(at 49.53 96.5199 0)
+			(at 52.07 96.5199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8512,7 +8399,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 46.6852 99.06 0)
+			(at 49.2252 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8521,7 +8408,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 45.72 95.25 0)
+			(at 48.26 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8530,7 +8417,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 45.72 95.25 0)
+			(at 48.26 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11101,6 +10988,77 @@
 			(project "lightmeter"
 				(path "/d6ab05e9-ebb1-480e-b763-4bcbf117a171"
 					(reference "SW4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "boost_converter_module:boost_converter_module")
+		(at 213.36 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e8ffb549-1cd7-45c5-9b19-f91ab7f4887a")
+		(property "Reference" "U4"
+			(at 220.3462 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 220.3462 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Boost_Converter_Module_Footprint:Boost_Converter_Module"
+			(at 213.36 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 213.36 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 213.36 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "20ff326b-4005-48f0-a5f8-0f5038415ecd")
+		)
+		(pin "2"
+			(uuid "ab96a202-a575-41e3-a028-39364ba233cf")
+		)
+		(pin "1"
+			(uuid "48d95c83-80ab-4495-95cc-eff6a0028892")
+		)
+		(instances
+			(project ""
+				(path "/d6ab05e9-ebb1-480e-b763-4bcbf117a171"
+					(reference "U4")
 					(unit 1)
 				)
 			)
